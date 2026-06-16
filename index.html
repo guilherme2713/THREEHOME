@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THREE HOME — Curadoria de Móveis · Vila Olímpia</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:  '#F9F9F6',
+            ink:    '#1A1A1A',
+            gold:   '#C5A059',
+            'gold-light': '#D4B47A',
+            'gold-dark':  '#A8863D',
+            muted:  '#6B6B68',
+            border: '#E3E3DE',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans:  ['Inter', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          },
+          letterSpacing: { widest: '0.32em' },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── Base ─────────────────────────────── */
+    body { background: #F9F9F6; color: #1A1A1A; }
+
+    /* ── Scroll reveal ────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .10s; }
+    .d2 { transition-delay: .20s; }
+    .d3 { transition-delay: .30s; }
+    .d4 { transition-delay: .40s; }
+
+    /* ── Navbar state ─────────────────────── */
+    #navbar { transition: background .45s ease, padding .35s ease, box-shadow .45s ease; }
+
+    #navbar.at-top  .nav-link  { color: #ffffff; }
+    #navbar.scrolled .nav-link { color: #1A1A1A; }
+
+    #navbar.at-top  .nav-cta  { border-color: rgba(255,255,255,0.7); color: #fff; }
+    #navbar.scrolled .nav-cta { border-color: #C5A059; color: #C5A059; }
+    #navbar.at-top  .nav-cta:hover { background: #fff; color: #1A1A1A; }
+    #navbar.scrolled .nav-cta:hover { background: #C5A059; color: #fff; border-color: #C5A059; }
+
+    #navbar.at-top   #logo-dark  { display: none;  }
+    #navbar.at-top   #logo-light { display: block; }
+    #navbar.scrolled #logo-dark  { display: block; }
+    #navbar.scrolled #logo-light { display: none;  }
+
+    #navbar.at-top  .hline { background: #fff; }
+    #navbar.scrolled .hline { background: #1A1A1A; }
+
+    #navbar.scrolled {
+      background: rgba(249,249,246,0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+
+    /* ── Progress bar ─────────────────────── */
+    #progress { position:fixed; top:0; left:0; height:2px; background:#C5A059; width:0; z-index:9999; transition:width .1s linear; }
+
+    /* ── Buttons ──────────────────────────── */
+    .btn { transition: background .28s ease, color .28s ease, border-color .28s ease, transform .18s ease; }
+    .btn:active { transform: scale(.97); }
+
+    /* ── Product card hover ───────────────── */
+    .p-card .p-img  { transition: transform .7s cubic-bezier(.16,1,.3,1); }
+    .p-card:hover .p-img { transform: scale(1.04); }
+    .p-card .p-veil { opacity:0; transition: opacity .35s ease; }
+    .p-card:hover .p-veil { opacity:1; }
+
+    /* ── Mobile menu ──────────────────────── */
+    #mob-menu { max-height:0; overflow:hidden; opacity:0; transition: max-height .4s ease, opacity .35s ease; }
+    #mob-menu.open { max-height:360px; opacity:1; }
+
+    /* ── Gold divider ─────────────────────── */
+    .gold-rule { display:block; width:48px; height:1.5px; background:#C5A059; }
+
+    /* ── Serif headings ───────────────────── */
+    h1,h2,.serif { font-family:'Playfair Display', Georgia, serif; }
+  </style>
+</head>
+
+<body class="antialiased overflow-x-hidden">
+<div id="progress"></div>
+
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<header id="navbar" class="at-top fixed top-0 inset-x-0 z-50 py-5 px-6 lg:px-14">
+  <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
+
+    <!-- Logo -->
+    <a href="#" class="shrink-0" aria-label="THREE HOME — Página Inicial">
+
+      <!-- Light version (over hero) -->
+      <div id="logo-light" class="flex items-center gap-3">
+        <svg width="36" height="36" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="4"  y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="#C5A059" letter-spacing="-4">T</text>
+          <text x="34" y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="rgba(197,160,89,0.55)" letter-spacing="-4">H</text>
+        </svg>
+        <div class="flex flex-col leading-none">
+          <span style="font-family:'Playfair Display',serif; font-size:14px; letter-spacing:.22em; color:#fff;">THREE HOME</span>
+          <span style="font-size:9px; letter-spacing:.45em; color:rgba(255,255,255,.55); font-family:Inter,sans-serif; text-transform:uppercase; margin-top:3px;">Vila Olímpia</span>
+        </div>
+      </div>
+
+      <!-- Dark version (scrolled) -->
+      <div id="logo-dark" class="flex items-center gap-3">
+        <svg width="36" height="36" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="4"  y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="#C5A059" letter-spacing="-4">T</text>
+          <text x="34" y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="rgba(197,160,89,0.45)" letter-spacing="-4">H</text>
+        </svg>
+        <div class="flex flex-col leading-none">
+          <span style="font-family:'Playfair Display',serif; font-size:14px; letter-spacing:.22em; color:#1A1A1A;">THREE HOME</span>
+          <span style="font-size:9px; letter-spacing:.45em; color:#9C9C99; font-family:Inter,sans-serif; text-transform:uppercase; margin-top:3px;">Vila Olímpia</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-10" aria-label="Principal">
+      <a href="#curadoria" class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Coleções</a>
+      <a href="#showroom"  class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Showroom</a>
+      <a href="#contato"   class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Contato</a>
+      <a href="#contato"   class="nav-cta btn ml-2 border text-[10px] tracking-widest uppercase font-medium px-7 py-3">
+        Fale com um Consultor
+      </a>
+    </nav>
+
+    <!-- Hamburger -->
+    <button id="ham" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Abrir menu" aria-expanded="false">
+      <span class="hline block w-6 h-[1.5px] transition-all duration-300 origin-center"></span>
+      <span class="hline block w-6 h-[1.5px] transition-all duration-300 origin-center"></span>
+      <span class="hline block w-4 h-[1.5px] transition-all duration-300 opacity-100 origin-right"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mob-menu" class="md:hidden">
+    <div class="mt-4 border-t border-border bg-cream px-6 py-6 flex flex-col gap-5">
+      <a href="#curadoria" class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Coleções</a>
+      <a href="#showroom"  class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Showroom</a>
+      <a href="#contato"   class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Contato</a>
+      <a href="#contato"   class="mob-link btn mt-2 border border-gold text-gold text-[10px] tracking-widest uppercase font-medium px-6 py-3.5 text-center hover:bg-gold hover:text-white">
+        Fale com um Consultor
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ════════════════════════════════════════
+     HERO — Mesa de jantar contínua (fundo wider re-costurado)
+     hero-mesa-jantar.jpg
+════════════════════════════════════════ -->
+<section
+  id="hero"
+  class="relative w-full h-[90vh] min-h-[600px] flex items-end justify-start overflow-hidden bg-cover bg-center bg-no-repeat"
+  style="background-image: url('./assets/img/hero-mesa-jantar.jpg');"
+>
+
+  <!-- Overlay escuro p/ contraste (mais forte na base, leve no topo
+       para preservar o letreiro iluminado da fachada) -->
+  <div class="absolute inset-0 bg-black/40"></div>
+  <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,0,0,.70) 0%, rgba(0,0,0,.20) 45%, transparent 75%)"></div>
+
+  <!-- Conteúdo: ancorado na base à esquerda, abaixo do letreiro da fachada -->
+  <div class="relative z-10 px-8 lg:px-20 pb-20 md:pb-28 max-w-3xl">
+    <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-cream/70 font-medium mb-7" style="font-family:Inter,sans-serif;">
+      Curadoria · Vila Olímpia · São Paulo
+    </span>
+    <h1 class="text-[clamp(2.8rem,7vw,5.5rem)] font-normal leading-[1.0] tracking-[-0.01em] text-white mb-6" style="font-family:'Playfair Display',serif; text-shadow: 0 2px 24px rgba(0,0,0,.45);">
+      Espaços que<br><em style="font-style:italic; font-weight:500;">falam por si.</em>
+    </h1>
+    <p class="text-[clamp(1rem,1.8vw,1.15rem)] font-light text-cream/80 leading-relaxed mb-10 max-w-sm" style="font-family:Inter,sans-serif; text-shadow: 0 1px 12px rgba(0,0,0,.45);">
+      Dois andares de móveis com design autoral e curadoria de alto padrão na Vila Olímpia.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="#curadoria"
+         class="btn text-center bg-gold text-white text-[10px] tracking-[0.3em] uppercase font-medium px-11 py-4 hover:bg-gold-light">
+        Ver Curadoria
+      </a>
+      <a href="#showroom"
+         class="btn text-center border border-cream/70 text-cream text-[10px] tracking-[0.3em] uppercase font-medium px-11 py-4 hover:bg-cream hover:text-ink">
+        Visitar Showroom
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="absolute bottom-8 right-10 hidden md:flex flex-col items-center gap-2 text-cream/40">
+    <div class="w-px h-12 bg-cream/30 animate-pulse"></div>
+    <span class="text-[8px] tracking-[0.5em] uppercase" style="font-family:Inter,sans-serif; writing-mode:vertical-rl;">Scroll</span>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     MANIFESTO
+════════════════════════════════════════ -->
+<section class="py-36 md:py-48 px-8 lg:px-20 bg-cream">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="reveal">
+      <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-muted font-medium mb-10" style="font-family:Inter,sans-serif;">Manifesto</span>
+      <h2 class="text-[clamp(2rem,4.5vw,4rem)] font-normal leading-[1.1] tracking-[-0.01em] text-ink mb-4">
+        Não vendemos móveis.<br><span style="font-style:italic; font-weight:500;">Curamos espaços.</span>
+      </h2>
+      <span class="gold-rule mt-8 mb-0"></span>
+    </div>
+
+    <div class="reveal mt-16 pt-16 border-t border-border grid md:grid-cols-[1fr_280px] gap-16 items-start">
+      <p class="text-xl md:text-2xl font-light leading-relaxed text-muted" style="font-family:Inter,sans-serif;">
+        A THREE HOME nasceu da convicção de que design de alto padrão não precisa custar uma fortuna —
+        mas precisa ser honesto. Dois andares inteiros em Vila Olímpia para você tocar, sentir e entender
+        o que cada peça faz em um ambiente. Cada item do nosso showroom foi escolhido pelo que
+        cria, pelo que ocupa e pelo silêncio que preenche.
+      </p>
+
+      <div class="flex flex-col gap-10">
+        <div class="border-l-2 border-gold pl-6">
+          <p class="text-[2.6rem] font-medium tracking-tight leading-none text-ink" style="font-family:'Playfair Display',serif;">02</p>
+          <p class="text-[10px] text-muted mt-2 tracking-widest uppercase" style="font-family:Inter,sans-serif;">Andares de showroom</p>
+        </div>
+        <div class="border-l-2 border-gold pl-6">
+          <p class="text-[2.6rem] font-medium tracking-tight leading-none text-ink" style="font-family:'Playfair Display',serif;">+240</p>
+          <p class="text-[10px] text-muted mt-2 tracking-widest uppercase" style="font-family:Inter,sans-serif;">Peças com curadoria</p>
+        </div>
+        <div class="border-l-2 border-gold pl-6">
+          <p class="text-[2.6rem] font-medium tracking-tight leading-none text-ink" style="font-family:'Playfair Display',serif;">01</p>
+          <p class="text-[10px] text-muted mt-2 tracking-widest uppercase" style="font-family:Inter,sans-serif;">Obsessão: seu espaço</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     DIFERENCIAIS — strip escuro
+════════════════════════════════════════ -->
+<section class="bg-ink text-white py-20 px-8 lg:px-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="reveal grid md:grid-cols-3 gap-10 md:divide-x divide-white/10">
+      <div class="md:pr-14">
+        <span class="gold-rule mb-6"></span>
+        <p class="text-[9px] tracking-[0.5em] uppercase text-white/40 font-medium mb-5" style="font-family:Inter,sans-serif;">Estética</p>
+        <p class="text-lg font-light leading-relaxed text-white/70" style="font-family:Inter,sans-serif;">
+          Design que não grita, mas que você nota de imediato. E na segunda visita também.
+        </p>
+      </div>
+      <div class="md:px-14">
+        <span class="gold-rule mb-6"></span>
+        <p class="text-[9px] tracking-[0.5em] uppercase text-white/40 font-medium mb-5" style="font-family:Inter,sans-serif;">Funcionalidade</p>
+        <p class="text-lg font-light leading-relaxed text-white/70" style="font-family:Inter,sans-serif;">
+          Beleza perde o sentido sem função. Cada peça passa pelos dois testes antes de entrar no catálogo.
+        </p>
+      </div>
+      <div class="md:pl-14">
+        <span class="gold-rule mb-6"></span>
+        <p class="text-[9px] tracking-[0.5em] uppercase text-white/40 font-medium mb-5" style="font-family:Inter,sans-serif;">Curadoria</p>
+        <p class="text-lg font-light leading-relaxed text-white/70" style="font-family:Inter,sans-serif;">
+          Só entra o que a gente colocaria em casa. Sem exceção. Sem volume por volume.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CURADORIA — grid de produtos
+════════════════════════════════════════ -->
+<section id="curadoria" class="py-36 md:py-48 px-8 lg:px-20 bg-cream">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between mb-16 gap-6">
+      <div>
+        <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-muted font-medium mb-4" style="font-family:Inter,sans-serif;">Curadoria</span>
+        <h2 class="text-[clamp(2rem,4vw,3.2rem)] font-normal leading-tight tracking-[-0.01em] text-ink">
+          Peças em <em style="font-style:italic;">destaque</em>
+        </h2>
+      </div>
+      <a href="#contato" class="btn text-[10px] font-medium tracking-[0.3em] uppercase text-gold border-b border-gold pb-1 hover:text-gold-dark hover:border-gold-dark transition-colors shrink-0">
+        Ver catálogo completo →
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7">
+
+      <!-- Card 1 – Sofá Fiume -->
+      <article class="p-card group cursor-pointer reveal">
+        <div class="relative overflow-hidden bg-[#EEEDE9]">
+          <img
+            src="./assets/img/sofa-fiume.jpg"
+            alt="Sofá Fiume"
+            class="p-img aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+          <!-- Hover veil -->
+          <div class="p-veil absolute inset-0 flex items-end justify-center pb-7"
+               style="background: linear-gradient(to top, rgba(26,26,26,.72) 0%, transparent 60%);">
+            <span class="btn inline-block border border-white/80 text-white text-[9px] tracking-[0.4em] uppercase font-medium px-7 py-2.5 hover:bg-gold hover:text-white hover:border-gold">
+              Ver Detalhes
+            </span>
+          </div>
+        </div>
+        <div class="pt-5 pb-2">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Design Modular Contemporâneo</p>
+          <h3 class="text-base font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Fiume</h3>
+        </div>
+      </article>
+
+      <!-- Card 2 – Sofá Agréable -->
+      <article class="p-card group cursor-pointer reveal d1">
+        <div class="relative overflow-hidden bg-[#EEEDE9]">
+          <img
+            src="./assets/img/sofa-agreable.jpg"
+            alt="Sofá Agréable"
+            class="p-img aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+          <div class="p-veil absolute inset-0 flex items-end justify-center pb-7"
+               style="background: linear-gradient(to top, rgba(26,26,26,.72) 0%, transparent 60%);">
+            <span class="btn inline-block border border-white/80 text-white text-[9px] tracking-[0.4em] uppercase font-medium px-7 py-2.5 hover:bg-gold hover:text-white hover:border-gold">
+              Ver Detalhes
+            </span>
+          </div>
+        </div>
+        <div class="pt-5 pb-2">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Conforto e Sofisticação</p>
+          <h3 class="text-base font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Agréable</h3>
+        </div>
+      </article>
+
+      <!-- Card 3 – Poltrona Maria -->
+      <article class="p-card group cursor-pointer reveal d2">
+        <div class="relative overflow-hidden bg-[#EEEDE9]">
+          <img
+            src="./assets/img/poltrona-maria.jpg"
+            alt="Poltrona Maria"
+            class="p-img aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+          <div class="p-veil absolute inset-0 flex items-end justify-center pb-7"
+               style="background: linear-gradient(to top, rgba(26,26,26,.72) 0%, transparent 60%);">
+            <span class="btn inline-block border border-white/80 text-white text-[9px] tracking-[0.4em] uppercase font-medium px-7 py-2.5 hover:bg-gold hover:text-white hover:border-gold">
+              Ver Detalhes
+            </span>
+          </div>
+        </div>
+        <div class="pt-5 pb-2">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Design em Couro e Madeira</p>
+          <h3 class="text-base font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Poltrona Maria</h3>
+        </div>
+      </article>
+
+      <!-- Card 4 – Cama Pomme -->
+      <article class="p-card group cursor-pointer reveal d3">
+        <div class="relative overflow-hidden bg-[#EEEDE9]">
+          <img
+            src="./assets/img/cama-pomme.jpg"
+            alt="Cama Pomme"
+            class="p-img aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+          <div class="p-veil absolute inset-0 flex items-end justify-center pb-7"
+               style="background: linear-gradient(to top, rgba(26,26,26,.72) 0%, transparent 60%);">
+            <span class="btn inline-block border border-white/80 text-white text-[9px] tracking-[0.4em] uppercase font-medium px-7 py-2.5 hover:bg-gold hover:text-white hover:border-gold">
+              Ver Detalhes
+            </span>
+          </div>
+        </div>
+        <div class="pt-5 pb-2">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Aconchego e Elegância</p>
+          <h3 class="text-base font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Cama Pomme</h3>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     SHOWROOM — fachada 50/50
+════════════════════════════════════════ -->
+<section id="showroom" class="bg-ink">
+  <div class="grid lg:grid-cols-2 min-h-[660px]">
+
+    <!-- Foto da fachada (prédio de 2 andares com letreiro iluminado) -->
+    <div class="relative overflow-hidden min-h-[420px] lg:min-h-0 order-2 lg:order-1">
+      <img
+        src="./assets/img/fachada-three-home.png"
+        alt="Fachada THREE HOME — Vila Olímpia"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+      <!-- Overlay leve para dar profundidade -->
+      <div class="absolute inset-0 bg-ink/20"></div>
+    </div>
+
+    <!-- Texto -->
+    <div class="order-1 lg:order-2 flex items-center px-8 md:px-16 lg:px-20 py-24" style="background:#1A1A1A;">
+      <div class="max-w-md reveal">
+        <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-white/35 font-medium mb-8" style="font-family:Inter,sans-serif;">O Showroom</span>
+        <span class="gold-rule mb-10"></span>
+        <h2 class="text-[clamp(2.2rem,4vw,3.6rem)] font-normal leading-[1.05] tracking-[-0.01em] text-white mb-8" style="font-family:'Playfair Display',serif;">
+          Dois andares.<br>Uma experiência<br><em style="font-style:italic; color:#C5A059;">completa.</em>
+        </h2>
+        <p class="text-white/55 font-light leading-relaxed text-base mb-4" style="font-family:Inter,sans-serif;">
+          Foto boa não vende móvel ruim — mas também não captura a textura do couro,
+          o peso da madeira maciça ou a proporção que um sofá faz em uma sala.
+        </p>
+        <p class="text-white/55 font-light leading-relaxed text-base mb-10" style="font-family:Inter,sans-serif;">
+          Na THREE HOME você percorre dois andares com composições completas de ambientes,
+          toca cada peça e entende o que ela faz ao espaço. O café é por nossa conta.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#contato"
+             class="btn text-center bg-gold text-white text-[10px] tracking-[0.3em] uppercase font-medium px-9 py-4 hover:bg-gold-dark">
+            Agendar Visita
+          </a>
+          <a href="https://maps.google.com/?q=Av.+dos+Bandeirantes,+805+Vila+Olimpia+Sao+Paulo" target="_blank" rel="noopener"
+             class="btn text-center border border-white/25 text-white/70 text-[10px] tracking-[0.3em] uppercase font-medium px-9 py-4 hover:border-white/60 hover:text-white">
+            Como Chegar
+          </a>
+        </div>
+        <p class="text-[10px] text-white/30 mt-8 tracking-widest uppercase" style="font-family:Inter,sans-serif;">
+          Av. dos Bandeirantes, 805 · Vila Olímpia · SP
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     CTA BANNER
+════════════════════════════════════════ -->
+<section class="relative py-36 md:py-44 px-8 overflow-hidden bg-cream">
+  <!-- Linhas decorativas douradas -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04]">
+    <div class="w-full max-w-4xl h-px bg-gold"></div>
+  </div>
+  <div class="relative z-10 max-w-3xl mx-auto text-center reveal">
+    <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-muted font-medium mb-8" style="font-family:Inter,sans-serif;">Pronto para transformar?</span>
+    <h2 class="text-[clamp(2.2rem,5vw,4.5rem)] font-normal tracking-[-0.01em] leading-[1.05] mb-8 text-ink" style="font-family:'Playfair Display',serif;">
+      Comece pelo<br><em style="font-style:italic; color:#C5A059;">seu espaço.</em>
+    </h2>
+    <span class="gold-rule mx-auto mb-10"></span>
+    <p class="text-muted font-light text-lg mb-12 max-w-sm mx-auto leading-relaxed" style="font-family:Inter,sans-serif;">
+      Fale com um consultor. Sem compromisso, sem script de vendas.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="https://wa.me/5511912345678" target="_blank" rel="noopener"
+         class="btn text-center bg-ink text-white text-[10px] tracking-[0.35em] uppercase font-medium px-14 py-5 hover:bg-gold">
+        WhatsApp
+      </a>
+      <a href="mailto:ola@threehome.com.br"
+         class="btn text-center border border-ink text-ink text-[10px] tracking-[0.35em] uppercase font-medium px-14 py-5 hover:bg-ink hover:text-white">
+        E-mail
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer id="contato" class="bg-ink text-white">
+
+  <!-- Grid de informações -->
+  <div class="py-24 md:py-28 px-8 lg:px-20 border-b border-white/8">
+    <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10">
+
+      <!-- Marca -->
+      <div class="reveal lg:col-span-1">
+        <!-- Logo footer -->
+        <div class="flex items-center gap-3 mb-6">
+          <svg width="30" height="30" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="4"  y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="#C5A059" letter-spacing="-4">T</text>
+            <text x="34" y="62" font-family="'Playfair Display', Georgia, serif" font-size="72" font-weight="500" fill="rgba(197,160,89,0.45)" letter-spacing="-4">H</text>
+          </svg>
+          <span style="font-family:'Playfair Display',serif; font-size:14px; letter-spacing:.22em; color:#fff;">THREE HOME</span>
+        </div>
+        <p class="text-sm font-light text-white/45 leading-relaxed" style="font-family:Inter,sans-serif;">
+          Curadoria de móveis com estética premium e preço justo. Em dois andares de Vila Olímpia.
+        </p>
+      </div>
+
+      <!-- Endereço -->
+      <div class="reveal d1">
+        <span class="text-[9px] tracking-[0.5em] uppercase text-white/30 font-medium block mb-6" style="font-family:Inter,sans-serif;">Endereço</span>
+        <address class="not-italic text-sm font-light text-white/55 leading-relaxed" style="font-family:Inter,sans-serif;">
+          Av. dos Bandeirantes, 805<br>
+          Vila Olímpia — São Paulo, SP<br>
+          CEP 06230-120
+        </address>
+        <a href="https://maps.google.com/?q=Av.+dos+Bandeirantes,+805+Vila+Olimpia+Sao+Paulo"
+           target="_blank" rel="noopener"
+           class="inline-block mt-5 text-[9px] tracking-widest uppercase text-gold hover:text-gold-light transition-colors" style="font-family:Inter,sans-serif;">
+          Ver no mapa →
+        </a>
+      </div>
+
+      <!-- Horários -->
+      <div class="reveal d2">
+        <span class="text-[9px] tracking-[0.5em] uppercase text-white/30 font-medium block mb-6" style="font-family:Inter,sans-serif;">Funcionamento</span>
+        <div class="flex flex-col gap-4 text-sm font-light" style="font-family:Inter,sans-serif;">
+          <div class="flex flex-col gap-1">
+            <span class="text-white/35 text-[9px] tracking-widest uppercase">Segunda a Sábado</span>
+            <span class="text-white/70 text-base" style="font-family:'Playfair Display',serif;">10h — 20h</span>
+          </div>
+          <div class="w-8 h-px bg-white/10"></div>
+          <div class="flex flex-col gap-1">
+            <span class="text-white/35 text-[9px] tracking-widest uppercase">Domingos e Feriados</span>
+            <span class="text-white/70 text-base" style="font-family:'Playfair Display',serif;">10h — 17h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contato & Redes -->
+      <div class="reveal d3">
+        <span class="text-[9px] tracking-[0.5em] uppercase text-white/30 font-medium block mb-6" style="font-family:Inter,sans-serif;">Contato</span>
+        <div class="flex flex-col gap-3 mb-8">
+          <a href="tel:+551134567890"
+             class="text-sm font-light text-white/55 hover:text-white transition-colors" style="font-family:Inter,sans-serif;">
+            (11) 3456-7890
+          </a>
+          <a href="mailto:ola@threehome.com.br"
+             class="text-sm font-light text-white/55 hover:text-white transition-colors" style="font-family:Inter,sans-serif;">
+            ola@threehome.com.br
+          </a>
+          <a href="https://wa.me/5511912345678" target="_blank" rel="noopener"
+             class="btn inline-flex items-center gap-2 mt-1 border border-gold/50 text-gold text-[9px] tracking-widest uppercase px-5 py-2.5 hover:bg-gold hover:text-white hover:border-gold w-fit" style="font-family:Inter,sans-serif;">
+            WhatsApp →
+          </a>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="#" class="text-[10px] tracking-widest uppercase text-white/30 hover:text-gold transition-colors" style="font-family:Inter,sans-serif;">Instagram</a>
+          <a href="#" class="text-[10px] tracking-widest uppercase text-white/30 hover:text-gold transition-colors" style="font-family:Inter,sans-serif;">Pinterest</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="py-6 px-8 lg:px-20">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-[10px] text-white/20 tracking-widest uppercase" style="font-family:Inter,sans-serif;">© 2025 THREE HOME</span>
+      <nav class="flex items-center gap-8" aria-label="Footer">
+        <a href="#curadoria" class="text-[9px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase" style="font-family:Inter,sans-serif;">Coleções</a>
+        <a href="#showroom"  class="text-[9px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase" style="font-family:Inter,sans-serif;">Showroom</a>
+        <a href="#contato"   class="text-[9px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase" style="font-family:Inter,sans-serif;">Contato</a>
+      </nav>
+      <span class="text-[9px] text-white/15 tracking-wide" style="font-family:Inter,sans-serif;">Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+  // ── Scroll progress ─────────────────────────────────────
+  const progressEl = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progressEl.style.width = `${(window.scrollY / total) * 100}%`;
+  }, { passive: true });
+
+  // ── Navbar state ─────────────────────────────────────────
+  const navbar = document.getElementById('navbar');
+  const THRESHOLD = 80;
+  function syncNav() {
+    const scrolled = window.scrollY > THRESHOLD;
+    navbar.classList.toggle('at-top',   !scrolled);
+    navbar.classList.toggle('scrolled',  scrolled);
+    navbar.classList.toggle('py-5',     !scrolled);
+    navbar.classList.toggle('py-3',      scrolled);
+  }
+  window.addEventListener('scroll', syncNav, { passive: true });
+  syncNav();
+
+  // ── Hamburger ────────────────────────────────────────────
+  const ham      = document.getElementById('ham');
+  const mobMenu  = document.getElementById('mob-menu');
+  let open = false;
+  ham.addEventListener('click', () => {
+    open = !open;
+    mobMenu.classList.toggle('open', open);
+    ham.setAttribute('aria-expanded', open);
+    const [a,b,c] = ham.querySelectorAll('span');
+    if (open) {
+      a.style.cssText = 'transform:translateY(6.5px) rotate(45deg)';
+      b.style.cssText = 'transform:translateY(-6.5px) rotate(-45deg)';
+      c.style.cssText = 'opacity:0; transform:scaleX(0)';
+    } else {
+      a.style.cssText = b.style.cssText = c.style.cssText = '';
+    }
+  });
+  document.querySelectorAll('.mob-link').forEach(l =>
+    l.addEventListener('click', () => {
+      open = false;
+      mobMenu.classList.remove('open');
+      ham.setAttribute('aria-expanded', 'false');
+      ham.querySelectorAll('span').forEach(s => s.style.cssText = '');
+    })
+  );
+
+  // ── Scroll reveal (IntersectionObserver) ────────────────
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.10, rootMargin: '0px 0px -36px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
