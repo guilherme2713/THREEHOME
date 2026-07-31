@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Segredos / variáveis de ambiente (NUNCA versionar)
+.env
+.env.*
+*.key
+*.pem
+credentials*
+secret*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependências (caso futuramente haja build)
+node_modules/
+
+# Editores / IDEs
+.vscode/
+.idea/
+*.swp
