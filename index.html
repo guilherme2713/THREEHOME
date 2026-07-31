@@ -133,6 +133,102 @@
 
     /* ── Serif headings ───────────────────── */
     h1,h2,.serif { font-family:'Playfair Display', Georgia, serif; }
+
+    /* ── Card: foco por teclado ───────────── */
+    .p-card:focus-visible { outline: 2px solid #C5A059; outline-offset: 4px; }
+
+    /* ═══════════════════════════════════════
+       PRODUCT MODAL (galeria + especificações)
+    ═══════════════════════════════════════ */
+    #product-modal { position: fixed; inset: 0; z-index: 10000; display: none; }
+    #product-modal.open { display: block; }
+    #product-modal .pm-backdrop {
+      position: absolute; inset: 0; background: rgba(20,20,18,0.72);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity .35s ease;
+    }
+    #product-modal.open .pm-backdrop { opacity: 1; }
+    #product-modal .pm-dialog {
+      position: relative; max-width: 1040px; width: calc(100% - 2rem);
+      max-height: calc(100vh - 2rem); margin: 1rem auto; top: 50%;
+      transform: translateY(-50%) scale(.98); opacity: 0;
+      transition: opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+      background: #F9F9F6; border-radius: 4px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    #product-modal.open .pm-dialog { opacity: 1; transform: translateY(-50%) scale(1); }
+    @media (max-width: 860px) {
+      #product-modal .pm-dialog { grid-template-columns: 1fr; overflow-y: auto; top: 0; transform: none; margin: 1rem auto; }
+      #product-modal.open .pm-dialog { transform: none; }
+    }
+    /* Galeria */
+    .pm-gallery { position: relative; background: #EEEDE9; }
+    .pm-stage { position: relative; aspect-ratio: 4/5; overflow: hidden; }
+    .pm-stage img { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; opacity:0; transition: opacity .4s ease; }
+    .pm-stage img.active { opacity: 1; }
+    .pm-nav {
+      position:absolute; top:50%; transform:translateY(-50%); z-index:3;
+      width:40px; height:40px; border-radius:50%; background:rgba(249,249,246,.9);
+      color:#1A1A1A; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; border:none; transition: background .25s ease, transform .2s ease;
+    }
+    .pm-nav:hover { background:#fff; transform:translateY(-50%) scale(1.08); }
+    .pm-nav.prev { left:12px; } .pm-nav.next { right:12px; }
+    .pm-counter {
+      position:absolute; bottom:12px; left:50%; transform:translateX(-50%); z-index:3;
+      background:rgba(26,26,26,.6); color:#fff; font-size:10px; letter-spacing:.2em;
+      padding:4px 12px; border-radius:20px; font-family:Inter,sans-serif;
+    }
+    .pm-thumbs { display:flex; gap:8px; padding:12px; overflow-x:auto; }
+    .pm-thumb { width:56px; height:56px; flex:0 0 auto; border-radius:3px; overflow:hidden; cursor:pointer; opacity:.5; border:1.5px solid transparent; transition:opacity .25s, border-color .25s; }
+    .pm-thumb.active { opacity:1; border-color:#C5A059; }
+    .pm-thumb img { width:100%; height:100%; object-fit:cover; }
+    /* Painel de conteúdo */
+    .pm-content { padding: 3rem 2.5rem; overflow-y:auto; }
+    @media (max-width: 860px) { .pm-content { padding: 2rem 1.5rem; } }
+    .pm-close {
+      position:absolute; top:14px; right:14px; z-index:5; width:38px; height:38px;
+      border-radius:50%; background:rgba(249,249,246,.9); border:none; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; color:#1A1A1A;
+      transition: background .25s, transform .2s;
+    }
+    .pm-close:hover { background:#fff; transform: rotate(90deg); }
+    .pm-spec-row { display:flex; justify-content:space-between; gap:1.5rem; padding:11px 0; border-bottom:1px solid #E3E3DE; }
+    .pm-spec-row:last-child { border-bottom:none; }
+    .pm-spec-k { font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#8a8a86; font-family:Inter,sans-serif; flex:0 0 34%; }
+    .pm-spec-v { font-size:13.5px; color:#2c2c2a; font-family:Inter,sans-serif; text-align:right; line-height:1.5; }
+    body.pm-lock { overflow: hidden; }
+
+    /* ═══════════════════════════════════════
+       WHATSAPP FLOATING BUTTON (CRO)
+    ═══════════════════════════════════════ */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,.45);
+      transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease;
+    }
+    .wa-float svg { width: 32px; height: 32px; }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,.6); }
+    .wa-float:active { transform: scale(1.03); }
+    .wa-float::before {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      background:#25D366; z-index:-1; animation: wa-pulse 2.4s ease-out infinite;
+    }
+    @keyframes wa-pulse {
+      0%   { transform: scale(1);   opacity:.55; }
+      70%  { transform: scale(1.7); opacity:0; }
+      100% { transform: scale(1.7); opacity:0; }
+    }
+    @media (max-width: 640px) {
+      .wa-float { bottom: 16px; right: 16px; width: 54px; height: 54px; }
+      .wa-float svg { width: 28px; height: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wa-float::before { animation: none; }
+    }
   </style>
 </head>
 
@@ -348,7 +444,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7">
 
       <!-- Card 1 – Sofá Fiume -->
-      <article class="p-card group cursor-pointer reveal">
+      <article class="p-card group cursor-pointer reveal" data-product="fiume" role="button" tabindex="0" aria-label="Ver detalhes do Sofá Fiume">
         <div class="relative overflow-hidden bg-[#EEEDE9]">
           <img
             src="./assets/img/sofa-fiume.jpg"
@@ -371,7 +467,7 @@
       </article>
 
       <!-- Card 2 – Sofá Agréable -->
-      <article class="p-card group cursor-pointer reveal d1">
+      <article class="p-card group cursor-pointer reveal d1" data-product="agreable" role="button" tabindex="0" aria-label="Ver detalhes do Sofá Agréable">
         <div class="relative overflow-hidden bg-[#EEEDE9]">
           <img
             src="./assets/img/sofa-agreable.jpg"
@@ -393,7 +489,7 @@
       </article>
 
       <!-- Card 3 – Poltrona Maria -->
-      <article class="p-card group cursor-pointer reveal d2">
+      <article class="p-card group cursor-pointer reveal d2" data-product="maria" role="button" tabindex="0" aria-label="Ver detalhes da Poltrona Maria">
         <div class="relative overflow-hidden bg-[#EEEDE9]">
           <img
             src="./assets/img/poltrona-maria.jpg"
@@ -415,7 +511,7 @@
       </article>
 
       <!-- Card 4 – Cama Pomme -->
-      <article class="p-card group cursor-pointer reveal d3">
+      <article class="p-card group cursor-pointer reveal d3" data-product="pomme" role="button" tabindex="0" aria-label="Ver detalhes da Cama Pomme">
         <div class="relative overflow-hidden bg-[#EEEDE9]">
           <img
             src="./assets/img/cama-pomme.jpg"
@@ -468,12 +564,12 @@
           Dois andares.<br>Uma experiência<br><em style="font-style:italic; color:#C5A059;">completa.</em>
         </h2>
         <p class="text-white/55 font-light leading-relaxed text-base mb-4" style="font-family:Inter,sans-serif;">
-          Foto boa não vende móvel ruim — mas também não captura a textura do couro,
-          o peso da madeira maciça ou a proporção que um sofá faz em uma sala.
+          Uma imagem pode inspirar, mas nada substitui a experiência sensorial e visual
+          de vivenciar o mobiliário.
         </p>
         <p class="text-white/55 font-light leading-relaxed text-base mb-10" style="font-family:Inter,sans-serif;">
-          Na THREE HOME você percorre dois andares com composições completas de ambientes,
-          toca cada peça e entende o que ela faz ao espaço. O café é por nossa conta.
+          Na ThreeHome, preparamos dois andares dedicados à arquitetura e ao design
+          de interiores contemporâneo.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="#contato"
@@ -545,7 +641,7 @@
           <span style="font-family:'Playfair Display',serif; font-size:14px; letter-spacing:.22em; color:#fff;">THREE HOME</span>
         </div>
         <p class="text-sm font-light text-white/45 leading-relaxed" style="font-family:Inter,sans-serif;">
-          Curadoria de móveis com estética premium e preço justo. Em dois andares de Vila Olímpia.
+          Ambientes fluidos, curadoria rigorosa de materiais nobres e soluções pensadas para quem valoriza a essência do morar bem.
         </p>
       </div>
 
@@ -677,6 +773,249 @@
     { threshold: 0.10, rootMargin: '0px 0px -36px 0px' }
   );
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+
+<!-- ════════════════════════════════════════
+     WHATSAPP — Botão flutuante (CRO)
+════════════════════════════════════════ -->
+<a id="wa-float"
+   class="wa-float"
+   href="https://wa.me/5511920728312?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20m%C3%B3veis%20da%20ThreeHome."
+   target="_blank" rel="noopener noreferrer"
+   aria-label="Fale conosco pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/>
+  </svg>
+</a>
+
+
+<!-- ════════════════════════════════════════
+     PRODUCT MODAL — galeria + especificações
+════════════════════════════════════════ -->
+<div id="product-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title" aria-hidden="true">
+  <div class="pm-backdrop" data-close></div>
+  <div class="pm-dialog">
+    <button class="pm-close" data-close aria-label="Fechar detalhes">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+
+    <!-- Galeria -->
+    <div class="pm-gallery">
+      <div class="pm-stage">
+        <div id="pm-slides"></div>
+        <button class="pm-nav prev" id="pm-prev" type="button" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="pm-nav next" id="pm-next" type="button" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="pm-counter" id="pm-counter"></div>
+      </div>
+      <div class="pm-thumbs" id="pm-thumbs"></div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="pm-content">
+      <p class="pm-tagline text-[9px] tracking-[0.45em] uppercase text-gold font-medium mb-3" id="pm-tagline" style="font-family:Inter,sans-serif;"></p>
+      <h3 id="pm-title" class="text-3xl font-normal tracking-tight text-ink mb-4" style="font-family:'Playfair Display',serif;"></h3>
+      <p id="pm-desc" class="text-[15px] font-light leading-relaxed text-muted mb-8" style="font-family:Inter,sans-serif;"></p>
+
+      <p class="text-[10px] tracking-[0.4em] uppercase text-ink font-medium mb-2" style="font-family:Inter,sans-serif;">Materiais &amp; Especificações</p>
+      <span class="gold-rule mb-4"></span>
+      <div id="pm-specs" class="mb-8"></div>
+
+      <a id="pm-wa" href="#" target="_blank" rel="noopener noreferrer"
+         class="btn inline-flex items-center gap-2 bg-ink text-white text-[10px] tracking-[0.3em] uppercase font-medium px-8 py-4 hover:bg-gold" style="font-family:Inter,sans-serif;">
+        Falar sobre esta peça
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PRODUCT DATA + MODAL LOGIC
+════════════════════════════════════════ -->
+<script>
+  // ── Mock de dados dos produtos (fácil manutenção; pronto p/ CMS/JSON) ──
+  // Cada produto suporta MÚLTIPLAS imagens — basta adicionar arquivos em
+  // ./assets/img/ e incluir o caminho no array "images".
+  const WA_NUMBER = '5511920728312';
+  const PRODUCTS = {
+    fiume: {
+      name: 'Sofá Fiume',
+      tagline: 'Design Modular Contemporâneo',
+      description: 'Linhas horizontais e volumes generosos definem o Fiume — um sofá modular que se adapta ao seu espaço. Assento profundo, caimento relaxado e acabamento impecável em cada costura.',
+      images: ['./assets/img/sofa-fiume.jpg'],
+      specs: [
+        ['Estrutura', 'Madeira de reflorestamento tratada e curada'],
+        ['Preenchimento', 'Espuma de alta densidade (D-33) com manta acrílica siliconada'],
+        ['Molejo', 'Percintas elásticas entrelaçadas de alta resiliência'],
+        ['Revestimento', 'Linho cru, veludo de algodão ou couro legítimo (sob consulta)'],
+        ['Pés / Suporte', 'Madeira maciça com acabamento natural'],
+        ['Composição', 'Modular — chaise e módulos avulsos combináveis'],
+      ],
+    },
+    agreable: {
+      name: 'Sofá Agréable',
+      tagline: 'Conforto e Sofisticação',
+      description: 'Feito para o tempo que você passa em casa. O Agréable combina módulos de conforto elevado, espuma de alta resiliência e um revestimento pensado para durar — sem abrir mão da elegância.',
+      images: ['./assets/img/sofa-agreable.jpg'],
+      specs: [
+        ['Estrutura interna', 'Madeira maciça de reflorestamento reforçada'],
+        ['Molejo', 'Percintas elásticas de alta resiliência (molejo suspenso)'],
+        ['Densidade da espuma', 'Assentos D-33 e encostos com fibra siliconada'],
+        ['Revestimento', 'Tecido de alta durabilidade, tratamento antimanchas'],
+        ['Assentos', 'Módulos com profundidade estendida'],
+        ['Pés / Suporte', 'Madeira ou metal com acabamento fosco'],
+      ],
+    },
+    maria: {
+      name: 'Poltrona Maria',
+      tagline: 'Design em Couro e Madeira',
+      description: 'Uma poltrona autoral onde a madeira maciça encontra o estofado na medida certa. Curvas suaves, encaixes aparentes e um acabamento que envelhece bem.',
+      images: ['./assets/img/poltrona-maria.jpg'],
+      specs: [
+        ['Estrutura', 'Madeira maciça nobre com curvatura moldada'],
+        ['Acabamento da madeira', 'Verniz fosco ou cera natural'],
+        ['Assento / Encosto', 'Espuma de densidade média (D-26) revestida'],
+        ['Revestimento', 'Couro legítimo ou tecido bouclé (sob consulta)'],
+        ['Marcenaria', 'Encaixes de madeira aparentes'],
+        ['Assinatura', 'Peça de design autoral'],
+      ],
+    },
+    pomme: {
+      name: 'Cama Pomme',
+      tagline: 'Aconchego e Elegância',
+      description: 'A cama que ancora o quarto. Cabeceira estofada de toque macio, estrutura robusta e tecidos que você escolhe — para um ambiente de descanso que respira sofisticação.',
+      images: ['./assets/img/cama-pomme.jpg'],
+      specs: [
+        ['Cabeceira', 'Estofada em espuma de alta densidade + manta acrílica'],
+        ['Base / Estrutura', 'Madeira maciça e MDF de alta resistência'],
+        ['Estrado', 'Estrado ripado em madeira'],
+        ['Ferragens', 'Ferragens metálicas de alta resistência'],
+        ['Tecidos disponíveis', 'Linho, veludo ou sarja (sob consulta)'],
+        ['Tamanhos', 'Queen ou King (sob consulta)'],
+      ],
+    },
+  };
+
+  (function () {
+    const modal    = document.getElementById('product-modal');
+    const slidesEl = document.getElementById('pm-slides');
+    const thumbsEl = document.getElementById('pm-thumbs');
+    const counter  = document.getElementById('pm-counter');
+    const prevBtn  = document.getElementById('pm-prev');
+    const nextBtn  = document.getElementById('pm-next');
+    const titleEl  = document.getElementById('pm-title');
+    const tagEl    = document.getElementById('pm-tagline');
+    const descEl   = document.getElementById('pm-desc');
+    const specsEl  = document.getElementById('pm-specs');
+    const waEl     = document.getElementById('pm-wa');
+
+    let current = 0;
+    let count   = 1;
+    let lastFocused = null;
+
+    function showSlide(i) {
+      const imgs   = slidesEl.querySelectorAll('img');
+      const thumbs = thumbsEl.querySelectorAll('.pm-thumb');
+      if (!imgs.length) return;
+      current = (i + count) % count;
+      imgs.forEach((im, idx) => im.classList.toggle('active', idx === current));
+      thumbs.forEach((t, idx) => t.classList.toggle('active', idx === current));
+      counter.textContent = (current + 1) + ' / ' + count;
+    }
+
+    function openProduct(id) {
+      const p = PRODUCTS[id];
+      if (!p) return;
+
+      // Texto
+      tagEl.textContent   = p.tagline;
+      titleEl.textContent = p.name;
+      descEl.textContent  = p.description;
+
+      // Especificações
+      specsEl.innerHTML = p.specs.map(function (row) {
+        return '<div class="pm-spec-row"><span class="pm-spec-k">' + row[0] +
+               '</span><span class="pm-spec-v">' + row[1] + '</span></div>';
+      }).join('');
+
+      // Galeria
+      count = p.images.length;
+      slidesEl.innerHTML = p.images.map(function (src, idx) {
+        return '<img src="' + src + '" alt="' + p.name + ' — foto ' + (idx + 1) +
+               '" loading="lazy" class="' + (idx === 0 ? 'active' : '') + '">';
+      }).join('');
+      thumbsEl.innerHTML = count > 1 ? p.images.map(function (src, idx) {
+        return '<button class="pm-thumb ' + (idx === 0 ? 'active' : '') +
+               '" type="button" data-i="' + idx + '" aria-label="Ver foto ' + (idx + 1) +
+               '"><img src="' + src + '" alt="" loading="lazy"></button>';
+      }).join('') : '';
+
+      // Mostra/oculta controles conforme nº de fotos
+      const multi = count > 1;
+      prevBtn.style.display = multi ? 'flex' : 'none';
+      nextBtn.style.display = multi ? 'flex' : 'none';
+      counter.style.display = multi ? 'block' : 'none';
+      thumbsEl.style.display = multi ? 'flex' : 'none';
+
+      // WhatsApp específico da peça (CRO)
+      const msg = 'Olá! Tenho interesse no ' + p.name + ' da ThreeHome. Poderiam me passar mais informações?';
+      waEl.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+
+      current = 0;
+      showSlide(0);
+
+      // Abre
+      lastFocused = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('pm-lock');
+      modal.querySelector('.pm-close').focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('pm-lock');
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    // Abrir a partir dos cards (clique + teclado)
+    document.querySelectorAll('.p-card[data-product]').forEach(function (card) {
+      card.addEventListener('click', function () { openProduct(card.dataset.product); });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProduct(card.dataset.product); }
+      });
+    });
+
+    // Navegação da galeria
+    prevBtn.addEventListener('click', function () { showSlide(current - 1); });
+    nextBtn.addEventListener('click', function () { showSlide(current + 1); });
+    thumbsEl.addEventListener('click', function (e) {
+      const t = e.target.closest('.pm-thumb');
+      if (t) showSlide(parseInt(t.dataset.i, 10));
+    });
+
+    // Fechar: botão X (clique direto)
+    modal.querySelector('.pm-close').addEventListener('click', closeModal);
+
+    // Fechar: backdrop — apenas se o gesto (mousedown) começou no próprio backdrop.
+    // Evita fechamento acidental ao abrir, ao arrastar seleção ou ao soltar o mouse fora do diálogo.
+    const backdrop = modal.querySelector('.pm-backdrop');
+    let downOnBackdrop = false;
+    backdrop.addEventListener('mousedown', function (e) { downOnBackdrop = (e.target === backdrop); });
+    backdrop.addEventListener('click', function (e) { if (downOnBackdrop && e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      else if (e.key === 'ArrowLeft'  && count > 1) showSlide(current - 1);
+      else if (e.key === 'ArrowRight' && count > 1) showSlide(current + 1);
+    });
+  })();
 </script>
 
 </body>
