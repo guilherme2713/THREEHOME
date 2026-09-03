@@ -4,14 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google tag (gtag.js) — Google Ads AW-18390582622 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18390582622"></script>
+  <!-- Consent Mode v2 — estado PADRÃO (roda ANTES de qualquer tag Google) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+    // Reaplica a escolha já salva pelo visitante (se aceitou anteriormente)
+    try {
+      if (localStorage.getItem('th_consent') === 'granted') {
+        gtag('consent', 'update', {
+          ad_storage: 'granted', ad_user_data: 'granted',
+          ad_personalization: 'granted', analytics_storage: 'granted'
+        });
+      }
+    } catch (e) {}
+  </script>
 
+  <!-- Google tag (gtag.js) — Google Ads AW-18390582622 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18390582622"></script>
+  <script>
+    gtag('js', new Date());
     gtag('config', 'AW-18390582622');
+  </script>
+
+  <!-- Google Tag Manager (container) — COLE o ID quando criar o container em tagmanager.google.com -->
+  <script>
+    (function () {
+      var GTM_ID = ''; /* <<< coloque aqui 'GTM-XXXXXXX' para ativar o GTM */
+      if (!GTM_ID) return;
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = document.getElementsByTagName('script')[0], j = document.createElement('script');
+      j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+      f.parentNode.insertBefore(j, f);
+    })();
   </script>
 
   <title>THREE HOME — Curadoria de Móveis · Vila Olímpia · São Paulo</title>
@@ -240,10 +272,41 @@
     @media (prefers-reduced-motion: reduce) {
       .wa-float::before { animation: none; }
     }
+
+    /* ═══════════════════════════════════════
+       COOKIE CONSENT BANNER (LGPD + Consent Mode)
+    ═══════════════════════════════════════ */
+    #cookie-banner {
+      position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 10001;
+      max-width: 560px; margin: 0 auto;
+      background: #1A1A1A; color: #F9F9F6;
+      border: 1px solid rgba(197,160,89,.35); border-radius: 6px;
+      padding: 20px 22px; box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      font-family: Inter, sans-serif;
+      transform: translateY(140%); transition: transform .5s cubic-bezier(.16,1,.3,1);
+    }
+    #cookie-banner.show { transform: translateY(0); }
+    #cookie-banner p { font-size: 13px; line-height: 1.6; color: rgba(249,249,246,.75); margin: 0 0 14px; }
+    #cookie-banner .cb-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    #cookie-banner button {
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
+      padding: 11px 20px; border-radius: 3px; cursor: pointer; border: 1px solid transparent;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    #cb-accept { background: #C5A059; color: #1A1A1A; border-color: #C5A059; }
+    #cb-accept:hover { background: #D4B47A; }
+    #cb-reject { background: transparent; color: rgba(249,249,246,.7); border-color: rgba(249,249,246,.25); }
+    #cb-reject:hover { border-color: rgba(249,249,246,.6); color: #fff; }
+    @media (max-width: 640px) {
+      #cookie-banner { right: 16px; left: 16px; bottom: 92px; } /* acima do botão flutuante */
+    }
   </style>
 </head>
 
 <body class="antialiased overflow-x-hidden">
+<!-- Google Tag Manager (noscript) — descomente e insira o ID ao ativar o container:
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+-->
 <div id="progress"></div>
 
 
@@ -286,7 +349,9 @@
       <a href="#curadoria" class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Coleções</a>
       <a href="#showroom"  class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Showroom</a>
       <a href="#contato"   class="nav-link btn text-[10px] tracking-widest uppercase font-medium hover:opacity-50 transition-opacity">Contato</a>
-      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener" class="nav-cta btn ml-2 border text-[10px] tracking-widest uppercase font-medium px-7 py-3">
+      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener"
+         data-cta-id="consultor_navbar" data-cta-name="Fale com um Consultor" data-cta-location="navbar" data-track-location="navbar"
+         class="nav-cta btn ml-2 border text-[10px] tracking-widest uppercase font-medium px-7 py-3">
         Fale com um Consultor
       </a>
     </nav>
@@ -305,7 +370,9 @@
       <a href="#curadoria" class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Coleções</a>
       <a href="#showroom"  class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Showroom</a>
       <a href="#contato"   class="mob-link text-sm font-medium tracking-widest uppercase text-ink hover:text-gold transition-colors">Contato</a>
-      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener" class="mob-link btn mt-2 border border-gold text-gold text-[10px] tracking-widest uppercase font-medium px-6 py-3.5 text-center hover:bg-gold hover:text-white">
+      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener"
+         data-cta-id="consultor_menu" data-cta-name="Fale com um Consultor" data-cta-location="mobile_menu" data-track-location="mobile_menu"
+         class="mob-link btn mt-2 border border-gold text-gold text-[10px] tracking-widest uppercase font-medium px-6 py-3.5 text-center hover:bg-gold hover:text-white">
         Fale com um Consultor
       </a>
     </div>
@@ -341,10 +408,12 @@
     </p>
     <div class="flex flex-col sm:flex-row gap-4">
       <a href="#curadoria"
+         data-cta-id="hero_ver_curadoria" data-cta-name="Ver Curadoria" data-cta-location="hero"
          class="btn text-center bg-gold text-white text-[10px] tracking-[0.3em] uppercase font-medium px-11 py-4 hover:bg-gold-light">
         Ver Curadoria
       </a>
       <a href="#showroom"
+         data-cta-id="hero_visitar_showroom" data-cta-name="Visitar Showroom" data-cta-location="hero"
          class="btn text-center border border-cream/70 text-cream text-[10px] tracking-[0.3em] uppercase font-medium px-11 py-4 hover:bg-cream hover:text-ink">
         Visitar Showroom
       </a>
@@ -619,7 +688,7 @@
       Fale com um consultor. Sem compromisso, sem script de vendas.
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener"
+      <a href="https://wa.me/5511920728312" target="_blank" rel="noopener" data-track-location="cta_section"
          class="btn text-center bg-ink text-white text-[10px] tracking-[0.35em] uppercase font-medium px-14 py-5 hover:bg-gold">
         WhatsApp
       </a>
@@ -699,7 +768,7 @@
              class="text-sm font-light text-white/55 hover:text-white transition-colors" style="font-family:Inter,sans-serif;">
             threehomecontato@gmail.com
           </a>
-          <a href="https://wa.me/5511920728312" target="_blank" rel="noopener"
+          <a href="https://wa.me/5511920728312" target="_blank" rel="noopener" data-track-location="footer"
              class="btn inline-flex items-center gap-2 mt-1 border border-gold/50 text-gold text-[9px] tracking-widest uppercase px-5 py-2.5 hover:bg-gold hover:text-white hover:border-gold w-fit" style="font-family:Inter,sans-serif;">
             WhatsApp →
           </a>
@@ -792,6 +861,7 @@
 ════════════════════════════════════════ -->
 <a id="wa-float"
    class="wa-float"
+   data-track-location="floating"
    href="https://wa.me/5511920728312?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20os%20m%C3%B3veis%20da%20ThreeHome."
    target="_blank" rel="noopener noreferrer"
    aria-label="Fale conosco pelo WhatsApp">
@@ -836,7 +906,7 @@
       <span class="gold-rule mb-4"></span>
       <div id="pm-specs" class="mb-8"></div>
 
-      <a id="pm-wa" href="#" target="_blank" rel="noopener noreferrer"
+      <a id="pm-wa" href="#" target="_blank" rel="noopener noreferrer" data-track-location="product_modal"
          class="btn inline-flex items-center gap-2 bg-ink text-white text-[10px] tracking-[0.3em] uppercase font-medium px-8 py-4 hover:bg-gold" style="font-family:Inter,sans-serif;">
         Falar sobre esta peça
       </a>
@@ -1027,6 +1097,139 @@
       else if (e.key === 'ArrowRight' && count > 1) showSlide(current + 1);
     });
   })();
+</script>
+
+
+<!-- ════════════════════════════════════════
+     COOKIE CONSENT — banner (LGPD + Consent Mode)
+════════════════════════════════════════ -->
+<div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+  <p>Usamos cookies para medir o desempenho do site e melhorar sua experiência. Você pode aceitar ou recusar o uso para análise e marketing.</p>
+  <div class="cb-actions">
+    <button id="cb-accept" type="button">Aceitar</button>
+    <button id="cb-reject" type="button">Recusar</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     TRACKING — dataLayer + eventos semânticos (essencial)
+     Contrato estável: nenhum dado pessoal (PII) é enviado.
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var DEBUG = false; // trocar para true em desenvolvimento
+
+  function eventId() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return Date.now() + '-' + Math.random().toString(36).slice(2);
+  }
+  function pageContext() {
+    return {
+      page_location: location.href,
+      page_path: location.pathname + location.search + location.hash,
+      page_title: document.title,
+      page_referrer: document.referrer || undefined
+    };
+  }
+  function clean(obj) {
+    var out = {};
+    for (var k in obj) if (obj[k] !== undefined && obj[k] !== null && obj[k] !== '') out[k] = obj[k];
+    return out;
+  }
+  // Camada central — nenhum componente chama dataLayer.push direto
+  function pushEvent(event, params) {
+    window.dataLayer = window.dataLayer || [];
+    var ctx = pageContext();
+    var payload = clean(Object.assign({ event: event, event_id: eventId(), event_timestamp: new Date().toISOString() }, ctx, params || {}));
+    window.dataLayer.push(payload);
+    if (DEBUG) console.debug('[tracking]', payload);
+  }
+  // Helpers semânticos (contrato tipado por convenção)
+  var T = {
+    pageView: function (p) { pushEvent('page_view', p); },
+    ctaClick: function (p) { pushEvent('cta_click', p); },
+    contactClick: function (p) {
+      if (p.contact_type === 'whatsapp') return pushEvent('whatsapp_click', p);
+      if (p.contact_type === 'phone')    return pushEvent('phone_click', p);
+      return pushEvent('email_click', p);
+    },
+    outboundClick: function (p) { pushEvent('outbound_click', p); }
+  };
+  window.THTracking = { push: pushEvent, track: T };
+
+  // ── page_view manual (single-page) ──
+  T.pageView({ page_type: 'home', page_section: 'home' });
+
+  // ── CTAs principais (evento explícito via data-attrs) ──
+  document.querySelectorAll('[data-cta-id]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      T.ctaClick({
+        cta_id: el.getAttribute('data-cta-id'),
+        cta_name: el.getAttribute('data-cta-name') || undefined,
+        cta_location: el.getAttribute('data-cta-location') || undefined,
+        destination: el.getAttribute('href') || undefined
+      });
+    });
+  });
+
+  // ── Auto-tracking de contatos/links (delegação — sem PII) ──
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var loc = a.getAttribute('data-track-location') || undefined;
+
+    if (/^https?:\/\/(wa\.me|api\.whatsapp\.com)/i.test(href)) {
+      T.contactClick({ contact_type: 'whatsapp', contact_location: loc }); // não envia o número
+    } else if (/^tel:/i.test(href)) {
+      T.contactClick({ contact_type: 'phone', contact_location: loc });    // não envia o número
+    } else if (/^mailto:/i.test(href)) {
+      T.contactClick({ contact_type: 'email', contact_location: loc });    // não envia o e-mail
+    } else if (/^https?:\/\//i.test(href) && href.indexOf(location.host) === -1) {
+      var domain = '';
+      try { domain = new URL(href).hostname; } catch (err) {}
+      T.outboundClick({ link_url: href, link_domain: domain });            // sem link_text (evita PII)
+    }
+  }, true);
+})();
+</script>
+
+
+<!-- ════════════════════════════════════════
+     COOKIE BANNER — lógica + Consent Mode update
+════════════════════════════════════════ -->
+<script>
+(function () {
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  var KEY = 'th_consent';
+  var stored;
+  try { stored = localStorage.getItem(KEY); } catch (e) {}
+
+  if (!stored) {
+    // mostra o banner após um instante (não bloqueia o carregamento)
+    setTimeout(function () { banner.classList.add('show'); }, 900);
+  }
+
+  function setConsent(granted) {
+    var state = granted ? 'granted' : 'denied';
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        ad_storage: state, ad_user_data: state,
+        ad_personalization: state, analytics_storage: state
+      });
+    }
+    try { localStorage.setItem(KEY, granted ? 'granted' : 'denied'); } catch (e) {}
+    if (window.THTracking) window.THTracking.push('consent_update', { consent: state });
+    banner.classList.remove('show');
+  }
+
+  var acc = document.getElementById('cb-accept');
+  var rej = document.getElementById('cb-reject');
+  if (acc) acc.addEventListener('click', function () { setConsent(true); });
+  if (rej) rej.addEventListener('click', function () { setConsent(false); });
+})();
 </script>
 
 </body>
