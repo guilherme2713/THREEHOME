@@ -618,6 +618,259 @@
 
 
 <!-- ════════════════════════════════════════
+     CATÁLOGO — Explorar por Categoria (filtros)
+════════════════════════════════════════ -->
+<style>
+  /* Filtros */
+  .cat-tab {
+    font-family: Inter, sans-serif; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+    font-weight: 500; color: #9C9A90; padding: 8px 2px; background: none; border: none; cursor: pointer;
+    position: relative; transition: color .3s ease;
+  }
+  .cat-tab::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
+    background: #C5A059; transform: scaleX(0); transform-origin: center; transition: transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .cat-tab:hover { color: #1A1A1A; }
+  .cat-tab.active { color: #1A1A1A; }
+  .cat-tab.active::after { transform: scaleX(1); }
+
+  /* Card */
+  .cat-card { transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1); }
+  .cat-card.entering { opacity: 0; transform: translateY(14px); }
+  .cat-media { position: relative; overflow: hidden; background: #EEEDE9; aspect-ratio: 4/5; }
+  .cat-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
+             transition: transform .7s cubic-bezier(.16,1,.3,1); }
+  .cat-card:hover .cat-img { transform: scale(1.05); }
+  .cat-img.failed { opacity: 0; }
+  /* Placeholder "foto em breve" (atrás da imagem) */
+  .cat-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #EDEBE4 0%, #E3E0D6 100%); color: #B3A98E; z-index: 0; }
+  .cat-ph span { font-family: Inter, sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; }
+  /* Véu com CTA no hover */
+  .cat-veil { position: absolute; inset: 0; z-index: 2; display: flex; align-items: flex-end; justify-content: center;
+              padding-bottom: 26px; opacity: 0; transition: opacity .4s ease;
+              background: linear-gradient(to top, rgba(26,26,26,.72) 0%, transparent 62%); }
+  .cat-card:hover .cat-veil { opacity: 1; }
+  .cat-cta {
+    font-family: Inter, sans-serif; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 500;
+    color: #fff; border: 1px solid rgba(255,255,255,.8); padding: 10px 22px;
+    transition: background .3s, color .3s, border-color .3s;
+  }
+  .cat-cta:hover { background: #C5A059; border-color: #C5A059; color: #fff; }
+  @media (max-width: 640px) { .cat-veil { opacity: 1; background: linear-gradient(to top, rgba(26,26,26,.55) 0%, transparent 55%); } }
+</style>
+
+<section id="catalogo" class="py-36 md:py-48 px-8 lg:px-20 bg-cream">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Cabeçalho -->
+    <div class="reveal text-center max-w-2xl mx-auto mb-14">
+      <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-muted font-medium mb-4" style="font-family:Inter,sans-serif;">Catálogo</span>
+      <h2 class="text-[clamp(2rem,4vw,3.4rem)] font-normal leading-tight tracking-[-0.01em] text-ink">
+        Explorar por <em style="font-style:italic;">categoria</em>
+      </h2>
+      <p class="text-muted font-light mt-5 leading-relaxed" style="font-family:Inter,sans-serif;">
+        Uma curadoria de peças selecionadas — filtre pelo que você procura.
+      </p>
+      <span class="gold-rule mx-auto mt-8"></span>
+    </div>
+
+    <!-- Filtros -->
+    <div class="reveal flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-16" role="tablist" aria-label="Filtrar por categoria">
+      <button class="cat-tab active" data-filter="todos" aria-pressed="true">Todos</button>
+      <button class="cat-tab" data-filter="sofas" aria-pressed="false">Sofás</button>
+      <button class="cat-tab" data-filter="poltronas" aria-pressed="false">Poltronas</button>
+      <button class="cat-tab" data-filter="cadeiras" aria-pressed="false">Cadeiras</button>
+      <button class="cat-tab" data-filter="mesas" aria-pressed="false">Mesas</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="cat-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8">
+
+      <!-- SOFÁS -->
+      <article class="cat-card reveal" data-category="sofas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/sofa-loft.jpg" alt="Sofá Loft" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Sofá Loft" data-cta-id="orcamento_sofa_loft" data-cta-name="Solicitar Orçamento — Sofá Loft" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Sofás</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Loft</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="sofas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/sofa-moretti.jpg" alt="Sofá Moretti" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Sofá Moretti" data-cta-id="orcamento_sofa_moretti" data-cta-name="Solicitar Orçamento — Sofá Moretti" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Sofás</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Moretti</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="sofas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/sofa-status.jpg" alt="Sofá Status" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Sofá Status" data-cta-id="orcamento_sofa_status" data-cta-name="Solicitar Orçamento — Sofá Status" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Sofás</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Status</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="sofas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/sofa-curvo.jpg" alt="Sofá Curvo" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Sofá Curvo" data-cta-id="orcamento_sofa_curvo" data-cta-name="Solicitar Orçamento — Sofá Curvo" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Sofás</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Curvo</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="sofas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/sofa-modular.jpg" alt="Sofá Modular" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Sofá Modular" data-cta-id="orcamento_sofa_modular" data-cta-name="Solicitar Orçamento — Sofá Modular" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Sofás</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Sofá Modular</h3>
+        </div>
+      </article>
+
+      <!-- POLTRONAS -->
+      <article class="cat-card reveal" data-category="poltronas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/poltrona-liesel.jpg" alt="Poltrona Liesel" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Poltrona Liesel" data-cta-id="orcamento_poltrona_liesel" data-cta-name="Solicitar Orçamento — Poltrona Liesel" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Poltronas · com puff</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Poltrona Liesel</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="poltronas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/poltrona-solene.jpg" alt="Poltrona Solene" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Poltrona Solene" data-cta-id="orcamento_poltrona_solene" data-cta-name="Solicitar Orçamento — Poltrona Solene" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Poltronas</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Poltrona Solene</h3>
+        </div>
+      </article>
+
+      <!-- CADEIRAS -->
+      <article class="cat-card reveal" data-category="cadeiras">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/cadeira-anna.jpg" alt="Cadeira Anna" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Cadeira Anna" data-cta-id="orcamento_cadeira_anna" data-cta-name="Solicitar Orçamento — Cadeira Anna" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Cadeiras</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Cadeira Anna</h3>
+        </div>
+      </article>
+
+      <article class="cat-card reveal" data-category="cadeiras">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/cadeira-duna.jpg" alt="Cadeira Duna" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Cadeira Duna" data-cta-id="orcamento_cadeira_duna" data-cta-name="Solicitar Orçamento — Cadeira Duna" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Cadeiras</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Cadeira Duna</h3>
+        </div>
+      </article>
+
+      <!-- MESAS -->
+      <article class="cat-card reveal" data-category="mesas">
+        <div class="cat-media">
+          <div class="cat-ph"><span>Foto em breve</span></div>
+          <img src="./assets/img/mesa-ibia.jpg" alt="Mesa de Jantar Ibiá" class="cat-img" loading="lazy" onerror="this.classList.add('failed')" />
+          <div class="cat-veil"><a class="cat-cta" data-name="Mesa de Jantar Ibiá" data-cta-id="orcamento_mesa_ibia" data-cta-name="Solicitar Orçamento — Mesa de Jantar Ibiá" data-cta-location="catalogo" data-track-location="catalogo" href="https://wa.me/5511920728312" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>
+        </div>
+        <div class="pt-5">
+          <p class="text-[8.5px] tracking-[0.45em] uppercase text-gold font-medium mb-2" style="font-family:Inter,sans-serif;">Mesas</p>
+          <h3 class="text-lg font-normal tracking-tight text-ink" style="font-family:'Playfair Display',serif;">Mesa de Jantar Ibiá</h3>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Estado vazio (nenhuma peça na categoria) -->
+    <p id="cat-empty" class="hidden text-center text-muted font-light py-16" style="font-family:Inter,sans-serif;">
+      Nenhuma peça nesta categoria por enquanto.
+    </p>
+  </div>
+</section>
+
+<script>
+(function () {
+  var grid    = document.getElementById('cat-grid');
+  if (!grid) return;
+  var cards   = Array.prototype.slice.call(grid.querySelectorAll('.cat-card'));
+  var tabs    = document.querySelectorAll('.cat-tab');
+  var empty   = document.getElementById('cat-empty');
+  var WA       = 'https://wa.me/5511920728312';
+
+  // Mensagem de orçamento pré-preenchida por peça (sem PII)
+  cards.forEach(function (card) {
+    var a = card.querySelector('.cat-cta');
+    if (!a) return;
+    var nome = a.getAttribute('data-name') || 'uma peça';
+    var msg  = 'Olá! Tenho interesse no ' + nome + ' da ThreeHome. Poderiam me passar mais informações sobre valores e prazos?';
+    a.href = WA + '?text=' + encodeURIComponent(msg);
+  });
+
+  function applyFilter(cat) {
+    var visiveis = 0;
+    cards.forEach(function (card) {
+      var match = cat === 'todos' || card.getAttribute('data-category') === cat;
+      if (match) {
+        card.style.display = '';
+        card.classList.add('entering');
+        visiveis++;
+        // reflow + anima entrada
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { card.classList.remove('entering'); });
+        });
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    if (empty) empty.classList.toggle('hidden', visiveis > 0);
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
+      tab.classList.add('active'); tab.setAttribute('aria-pressed', 'true');
+      applyFilter(tab.getAttribute('data-filter'));
+      if (window.THTracking) window.THTracking.push('filter_select', { filter_category: tab.getAttribute('data-filter'), page_section: 'catalogo' });
+    });
+  });
+})();
+</script>
+
+
+<!-- ════════════════════════════════════════
      SHOWROOM — fachada 50/50
 ════════════════════════════════════════ -->
 <section id="showroom" class="bg-ink">
