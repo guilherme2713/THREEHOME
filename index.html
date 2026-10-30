@@ -46,39 +46,53 @@
     })();
   </script>
 
-  <title>THREE HOME — Curadoria de Móveis · Vila Olímpia · São Paulo</title>
+  <title>Loja de Móveis de Alto Padrão na Vila Olímpia, SP | Three Home</title>
 
   <!-- SEO -->
-  <meta name="description" content="THREE HOME — curadoria de móveis e objetos de design na Vila Olímpia, São Paulo. Peças selecionadas para transformar a sua casa. Visite a loja na Av. dos Bandeirantes, 805." />
+  <meta name="description" content="Showroom de móveis de alto padrão na Vila Olímpia, São Paulo: sofás, poltronas, mesas de jantar, cadeiras, aparadores e peças de design autoral. Agende sua visita." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.threehome.com.br/" />
 
   <!-- Open Graph / redes sociais -->
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="THREE HOME" />
-  <meta property="og:title" content="THREE HOME — Curadoria de Móveis · Vila Olímpia" />
-  <meta property="og:description" content="Curadoria de móveis e objetos de design na Vila Olímpia, São Paulo." />
+  <meta property="og:site_name" content="Three Home" />
+  <meta property="og:title" content="Loja de Móveis de Alto Padrão na Vila Olímpia, SP | Three Home" />
+  <meta property="og:description" content="Showroom de dois andares na Av. dos Bandeirantes, 805, Vila Olímpia. Sofás, poltronas, mesas de jantar e peças de design autoral." />
   <meta property="og:url" content="https://www.threehome.com.br/" />
   <meta property="og:locale" content="pt_BR" />
+  <meta property="og:image" content="https://www.threehome.com.br/assets/img/hero-mesa-jantar.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.threehome.com.br/assets/img/hero-mesa-jantar.jpg" />
 
   <!-- Dados estruturados: loja de móveis (ajuda o Google a montar o painel da empresa) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FurnitureStore",
-    "name": "THREE HOME",
-    "description": "Curadoria de móveis e objetos de design na Vila Olímpia, São Paulo.",
+    "@id": "https://www.threehome.com.br/#loja",
+    "name": "Three Home",
+    "description": "Loja de móveis de alto padrão com showroom de dois andares na Vila Olímpia, São Paulo.",
     "url": "https://www.threehome.com.br/",
+    "logo": "https://www.threehome.com.br/assets/img/logo-three-home.jpeg",
+    "image": "https://www.threehome.com.br/assets/img/fachada-three-home.png",
+    "telephone": "+55-11-92072-8312",
     "email": "threehomecontato@gmail.com",
-    "telephone": "+55 11 92072-8312",
+    "priceRange": "$$$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Av. dos Bandeirantes, 805",
-      "addressLocality": "Vila Olímpia",
+      "streetAddress": "Av. dos Bandeirantes, 805, Vila Olímpia",
+      "addressLocality": "São Paulo",
       "addressRegion": "SP",
       "addressCountry": "BR"
     },
+    "hasMap": "https://maps.google.com/?q=Av.+dos+Bandeirantes,+805+Vila+Olimpia+Sao+Paulo",
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "20:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "17:00" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/threehome.decor"
+    ],
     "areaServed": "São Paulo"
   }
   </script>
@@ -115,6 +129,7 @@
   <style>
     /* ── Base ─────────────────────────────── */
     body { background: #F9F9F6; color: #1A1A1A; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
     /* ── Scroll reveal ────────────────────── */
     .reveal {
@@ -397,12 +412,13 @@
 
   <!-- Conteúdo: ancorado na base à esquerda, abaixo do letreiro da fachada -->
   <div class="relative z-10 px-8 lg:px-20 pb-20 md:pb-28 max-w-3xl">
+    <h1 class="sr-only">Loja de móveis de alto padrão na Vila Olímpia, São Paulo</h1>
     <span class="inline-block text-[9px] tracking-[0.55em] uppercase text-cream/70 font-medium mb-7" style="font-family:Inter,sans-serif;">
       Curadoria · Vila Olímpia · São Paulo
     </span>
-    <h1 class="text-[clamp(2.8rem,7vw,5.5rem)] font-normal leading-[1.0] tracking-[-0.01em] text-white mb-6" style="font-family:'Playfair Display',serif; text-shadow: 0 2px 24px rgba(0,0,0,.45);">
+    <p class="text-[clamp(2.8rem,7vw,5.5rem)] font-normal leading-[1.0] tracking-[-0.01em] text-white mb-6" style="font-family:'Playfair Display',serif; text-shadow: 0 2px 24px rgba(0,0,0,.45);">
       Ambientes que<br><em style="font-style:italic; font-weight:500;">inspiram.</em>
-    </h1>
+    </p>
     <p class="text-[clamp(1rem,1.8vw,1.15rem)] font-light text-cream/80 leading-relaxed mb-10 max-w-sm" style="font-family:Inter,sans-serif; text-shadow: 0 1px 12px rgba(0,0,0,.45);">
       Dois andares de móveis com design autoral e curadoria de alto padrão na Vila Olímpia.
     </p>
@@ -756,14 +772,14 @@
   function slug(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,''); }
 
   function cardHTML(p){
-    var msg  = 'Olá! Tenho interesse no ' + p.n + ' da ThreeHome. Poderiam me passar mais informações sobre valores e prazos?';
+    var msg  = 'Olá! Tenho interesse na peça ' + p.n + ' da Three Home. Poderiam me passar mais informações sobre valores e prazos?';
     var href = WA + '?text=' + encodeURIComponent(msg);
     var id   = slug(p.n);
     var sub  = p.sub || LABELS[p.c];
     return '' +
     '<article class="cat-card" data-category="'+p.c+'" data-tier="'+p.t+'">' +
       '<div class="cat-media">' +
-        '<div class="cat-ph"><span>Foto em breve</span></div>' +
+        '<div class="cat-ph" aria-hidden="true"></div>' +
         '<img src="./assets/img/'+p.img+'" alt="'+p.n+'" class="cat-img" loading="lazy" onerror="this.classList.add(\'failed\')" />' +
         '<div class="cat-veil"><a class="cat-cta" data-cta-id="orcamento_'+id+'" data-cta-name="Solicitar Orçamento — '+p.n+'" data-cta-location="catalogo" data-track-location="catalogo" href="'+href+'" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a></div>' +
       '</div>' +
@@ -982,7 +998,6 @@
         </div>
         <div class="flex flex-col gap-3">
           <a href="https://www.instagram.com/threehome.decor" target="_blank" rel="noopener" class="text-[10px] tracking-widest uppercase text-white/30 hover:text-gold transition-colors" style="font-family:Inter,sans-serif;">Instagram</a>
-          <a href="#" class="text-[10px] tracking-widest uppercase text-white/30 hover:text-gold transition-colors" style="font-family:Inter,sans-serif;">Pinterest</a>
         </div>
       </div>
 
@@ -992,7 +1007,7 @@
   <!-- Barra inferior -->
   <div class="py-6 px-8 lg:px-20">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="text-[10px] text-white/20 tracking-widest uppercase" style="font-family:Inter,sans-serif;">© 2025 THREE HOME</span>
+      <span class="text-[10px] text-white/20 tracking-widest uppercase" style="font-family:Inter,sans-serif;">© <span id="th-year">2026</span> THREE HOME</span>
       <nav class="flex items-center gap-8" aria-label="Footer">
         <a href="#curadoria" class="text-[9px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase" style="font-family:Inter,sans-serif;">Coleções</a>
         <a href="#showroom"  class="text-[9px] text-white/20 hover:text-white/50 transition-colors tracking-widest uppercase" style="font-family:Inter,sans-serif;">Showroom</a>
@@ -1060,6 +1075,10 @@
     { threshold: 0.10, rootMargin: '0px 0px -36px 0px' }
   );
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Ano dinâmico no rodapé
+  var yearEl = document.getElementById('th-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 </script>
 
 
@@ -1251,7 +1270,7 @@
       thumbsEl.style.display = multi ? 'flex' : 'none';
 
       // WhatsApp específico da peça (CRO)
-      const msg = 'Olá! Tenho interesse no ' + p.name + ' da ThreeHome. Poderiam me passar mais informações?';
+      const msg = 'Olá! Tenho interesse na peça ' + p.name + ' da Three Home. Poderiam me passar mais informações?';
       waEl.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
 
       current = 0;
